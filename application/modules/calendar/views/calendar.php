@@ -591,7 +591,7 @@
                             // $('#calendar').fullCalendar('refetchEvents');
                         });
 
-                        // window.location.reload()
+                         window.location.reload()
                     });
 
             } else {
@@ -675,7 +675,7 @@
                                 $('#calendar').fullCalendar('addEventSource', events);
                             });
                             $('.modal').modal('hide')
-                            // window.location.reload()
+                             window.location.reload()
                         })
                 }
 
