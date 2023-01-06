@@ -112,7 +112,7 @@
                                <span>Profile</span>
                            </a>
 
-                          
+
                            <div class="dropdown-divider"></div>
 
                            <!-- item-->
@@ -148,3 +148,7 @@
                </ul>
            </div>
            <!-- end Topbar -->
+
+           <script>
+               let domain = window.location.protocol+'//'+window.location.hostname+'/'+window.location.pathname.split('/')[1]+'/'
+           </script>

@@ -342,9 +342,10 @@
             console.log($("#time_start_hour").val())
         })
 
-
-        async function get_data() {
-            const response = await fetch('event_calendars/get_data', {})
+        // * domain = e_navbar.php
+        async function get_data() { 
+            let url_calendar = new URL('calendar/event_calendars/get_data', domain); 
+            const response = await fetch(url_calendar, {})
 
             return response.json()
         }
@@ -472,7 +473,7 @@
             delete_data.append("id", id);
 
 
-
+            
             fetch('event_calendars/delete_image_data', {
                     method: 'POST',
                     body: delete_data
