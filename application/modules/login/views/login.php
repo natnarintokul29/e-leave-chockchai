@@ -21,7 +21,7 @@
 <body>
     <div class="authentication-bg bg-primary authentication-bg-pattern d-flex align-items-center pb-0 vh-100">
         <div class="home-btn d-none d-sm-block">
-            <a href="index.html"><i class="fas fa-home h2 text-white"></i></a>
+            <a href="#" class="h2 text-white">เข้าระบบ</a>
         </div>
 
         <div class="account-pages w-100 mt-5 mb-5">
@@ -36,12 +36,11 @@
                                 <div class="account-box">
                                     <div class="account-logo-box">
                                         <div class="text-center">
-                                            <a href="index.html">
+                                            <!-- <a href="index.html">
                                                 <img src="<?= base_url('asset/images/logo-dark.png') ?>" alt="" height="30">
-                                            </a>
+                                            </a> -->
                                         </div>
-                                        <h5 class="text-uppercase mb-1 mt-4">Register</h5>
-                                        <p class="mb-0">Get access to our admin panel</p>
+                                        <h5 class="text-uppercase mb-1 mt-4 text-center">ลงทะเบียนเข้าระบบ</h5>
                                     </div>
 
                                     <div class="account-content mt-4">
@@ -49,7 +48,7 @@
 
                                             <div class="form-group row">
                                                 <div class="col-12">
-                                                    <label for="">9</label>
+                                                    <label for="">ตำแหน่งงาน</label>
                                                     <select name="position" id="position" class="form-control position" required>
                                                         <option value="">ระบุตำแหน่งงาน</option>
                                                         <option value="programmer">programmer</option>
@@ -62,38 +61,29 @@
 
                                             <div class="form-group row">
                                                 <div class="col-12">
-                                                    <input class="form-control" type="text" id="name_eng" name="name_eng"  placeholder="ชื่ออังกฤษ">
+                                                <label for="">ชื่อ</label>
+                                                    <input class="form-control" type="text" id="name" name="name"  placeholder="ชื่อภาษาไทย">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-12">
-                                                    <input class="form-control" type="text" id="lastname_eng" name="lastname_eng"  placeholder="นามสกุลอังกฤษ">
+                                                <label for="">นามสกุล</label>
+                                                    <input class="form-control" type="text" id="lastname" name="lastname"  placeholder="นามสกุลภาษาไทย">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
                                                 <div class="col-12">
-                                                    <input class="form-control" type="text" id="name_th" name="name_th"  placeholder="ชื่อไทย">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <div class="col-12">
-                                                    <input class="form-control" type="text" id="lastname_th" name="lastname_th" placeholder="นามสกุลไทย">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <div class="col-12">
-                                                    <label for="">llll</label>
+                                                    <label for="">ชื่อผู้ใช้</label>
                                                     <input type="text" id="input_username" name="input_username" class="form-control" placeholder="ชื่อผู้ใช้" >
                                                    
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-12">
-                                                    <a href="page-recoverpw.html" class="text-muted float-right"><small>Forgot your password?</small></a>
+                                                    <a href="page-recoverpw.html" class="text-muted float-right"><small>ลืมรหัสผ่าน?</small></a>
+                                                    <label for="">รหัสผ่าน</label>
                                                     <input type="password" id="input_password" name="input_password" class="form-control"  placeholder="รหัสผ่าน">
                                                     
                                                 </div>
@@ -101,34 +91,11 @@
 
                                             <div class="form-group row text-center mt-2">
                                                 <div class="col-12">
-                                                    <button class="btn btn-md btn-block btn-primary waves-effect waves-light" id="btn_register" type="submit">Sign Up Free</button>
+                                                    <button class="btn btn-md btn-block btn-primary waves-effect waves-light" id="btn_register" type="submit">เข้าระบบ</button>
                                                 </div>
                                             </div>
 
-                                        </form>
-
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="text-center">
-                                                    <button type="button" class="btn mr-1 btn-facebook waves-effect waves-light">
-                                                        <i class="fab fa-facebook-f"></i>
-                                                    </button>
-                                                    <button type="button" class="btn mr-1 btn-googleplus waves-effect waves-light">
-                                                        <i class="fab fa-google"></i>
-                                                    </button>
-                                                    <button type="button" class="btn mr-1 btn-twitter waves-effect waves-light">
-                                                        <i class="fab fa-twitter"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mt-4 pt-2">
-                                            <div class="col-sm-12 text-center">
-                                                <p class="text-muted">Already have an account? <a href="page-login.html" class="text-dark ml-1"><b>Sign In</b></a></p>
-                                            </div>
-                                        </div>
-
+                                        </form>                                  
                                     </div>
                                 </div>
                             </div>
