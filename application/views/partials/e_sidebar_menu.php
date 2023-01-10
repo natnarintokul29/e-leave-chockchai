@@ -45,6 +45,18 @@
                             <li><a href="extras-contact.html">Contact</a></li>
                         </ul>
                     </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fe-plus-square"></i>
+                            <span>ผู้ดูแล</span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <ul class="nav-second-level" aria-expanded="false">
+                            <li><a href="<?= site_url('admin/ctl_register') ?>">ละทะเบียน</a></li>
+                            <li><a href="<?= site_url('admin/ctl_user') ?>">ผู้ใช้งาน</a></li>
+                        </ul>
+                    </li>
                 </ul>
 
             </div>

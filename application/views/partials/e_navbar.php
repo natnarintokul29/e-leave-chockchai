@@ -44,7 +44,7 @@
                                <!-- item-->
                                <a href="javascript:void(0);" class="dropdown-item notify-item">
                                    <div class="notify-icon">
-                                       <img src="<?= base_url('assets/images/users/avatar-4.jpg') ?>" class="img-fluid rounded-circle" alt="" />
+                                       <img src="<?= base_url('asset/images/users/avatar-4.jpg') ?>" class="img-fluid rounded-circle" alt="" />
                                    </div>
                                    <p class="notify-details">Karen Robinson</p>
                                    <p class="text-muted mb-0 user-msg">
@@ -95,7 +95,7 @@
 
                    <li class="dropdown notification-list">
                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                           <img src="<?= base_url('assets/images/users/avatar-1.jpg') ?>" alt="user-image" class="rounded-circle">
+                           <img src="<?= base_url('asset/images/users/avatar-1.jpg') ?>" alt="user-image" class="rounded-circle">
                            <span class="pro-user-name ml-1">
                                Maxine K <i class="mdi mdi-chevron-down"></i>
                            </span>
@@ -129,12 +129,12 @@
                <div class="logo-box">
                    <a href="index.html" class="logo text-center">
                        <span class="logo-lg">
-                           <!-- <img src="<?= base_url('assets/images/logo-light.png') ?>" alt="" height="25"> -->
+                           <!-- <img src="<?= base_url('asset/images/logo-light.png') ?>" alt="" height="25"> -->
                            <!-- <span class="logo-lg-text-light">E-leave.Chokchai</span> -->
                            <span style="font-size: 22px;">E-leave.Chokchai</span>
                        </span>
                        <span class="logo-sm">
-                           <!-- <img src="<?= base_url('assets/images/logo-sm.png') ?>" alt="" height="28"> -->
+                           <!-- <img src="<?= base_url('asset/images/logo-sm.png') ?>" alt="" height="28"> -->
                        </span>
                    </a>
                </div>
@@ -150,5 +150,23 @@
            <!-- end Topbar -->
 
            <script>
-               let domain = window.location.protocol+'//'+window.location.hostname+'/'+window.location.pathname.split('/')[1]+'/'
+               let domain = window.location.protocol + '//' + window.location.hostname + '/' + window.location.pathname.split('/')[1] + '/'
+               let datatable_dom = "<'row'<'col-6 btn-sm'B><'col-6 'f>>" +
+                   "<'row'<'col-sm-12 small'tr>>" +
+                   "<'row'<'col-sm-4 small'i><'col-sm-4 d-flex justify-content-center small'l><'col-sm-4 small'p>>"
+               let datatable_button = [
+                   'print',
+                   {
+                       extend: 'collection',
+                       text: 'Export',
+                       buttons: ['excel', 'pdf', 'copy'],
+                       fade: true
+                   },
+                   {
+                       extend: 'collection',
+                       text: 'Tool',
+                       buttons: ['columnsToggle', 'colvisRestore'],
+                       fade: true
+                   }
+               ]
            </script>

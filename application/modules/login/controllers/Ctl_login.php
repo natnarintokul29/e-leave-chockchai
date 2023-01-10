@@ -24,33 +24,91 @@ class Ctl_login extends MY_Controller {
      */
 	public function insert_data_staff()
 	{
-        /* <pre>Array
-            (
-                [data] => position=programmer&name_eng=&lastname_eng=&name_th=&lastname_th=&input_username=lll&input_password=2555
-            ) */
-            echo "<pre>";
-            print_r($this->input->post('data'));
-echo "<br>";
-// $url_components = parse_url($this->input->post('data'));
-// parse_str($url_components['query'], $params);
-
-$test = urldecode(http_build_query($this->input->post()));
-            echo "test=";
-            print_r($test);
-
-            $request = $this->input->post('data');
-            echo $request['position']."==position";
-            die;
+        /* position: 
+        programmer
+        name: 
+        ออม
+        lastname: 
+        โตกุล
+        input_username: 
+        ออม
+        input_password: 
+        12345 */
+        $array_text_error = array(
+            'position'  => 'ตำแหน่ง',
+            'name'  => 'ชื่อ',
+            'lastname'  => 'นามสกุล',
+            'input_username'  => 'ชื่อรหัสผ่าน',
+            'input_password'  => 'รหัสผ่าน'
+        );
+        
         if ($this->input->server('REQUEST_METHOD') == 'POST') {
+            $request = $this->input->post();
 
-            // $returns = $this->mdl_login->insert_data_staff();
+            $count_array = count($request);
+            // echo "<pre>";
+            // print_r($count_array);die;
+            if($count_array){
+
+                // ตรวจสอบ error
+                foreach($request as $key => $value){
+                    if(!$value){
+                        $result = array(
+                            'error' => 1,
+                            'txt'   => 'โปรดระบุ '. $array_text_error[$key],
+                        );
+
+                        echo json_encode($result);
+                        exit;  //จะใช้  exit; หรือ die; ก็ได้  (หยุดทำงาน)
+                    }
+                }
+
+                // ตรวจสอบ username
+                $sql = $this->db->from('staff')
+                ->where('username',trim($request['input_username']))
+                ->get();
+                $num = $sql->num_rows();
+                if($num){
+                    $result = array(
+                        'error' => 1,
+                        'txt'   => 'ไม่สามารถใช้ชื่อรหัสนี้ได้'
+                    );
+
+                    echo json_encode($result);
+                    exit;
+                }
+
+                // นำค่าลงฐานข้อมูล
+                $data_insert = array(
+                    'position'  => trim($request['position']),
+                    'name'      => trim($request['name']),
+                    'lastname'  => trim($request['lastname']),
+                    'username'  => trim($request['input_username']),
+                    'password'  => md5(trim($request['input_password'])),
+                );
+                $this->db->insert('staff',$data_insert);
+                $new_id = $this->db->insert_id();
+                if($new_id){
+                    $result = array(
+                        'error' => 0,
+                        'txt'   => 'ลงทะเบียนสำเร็จ'
+                    );
+
+                    echo json_encode($result);
+                    exit;
+                }
+            }
             
-            
 
 
-            echo $returns;
-        } else {
-            echo "no";
+            $result = array(
+                'error' => 1,
+                'txt'   => 'ไม่พบข้อมูล'
+            );
+
+            echo json_encode($result);
+            exit;
+
         }
 	}
 	public function update_data()
