@@ -14,6 +14,7 @@ class Mdl_register extends CI_Model
     {
         $query = $this->db->select('*')
             ->where('verify is null')
+            ->where('status', 1)
             ->get('staff');
 
         return $query->result();

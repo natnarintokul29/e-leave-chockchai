@@ -71,7 +71,7 @@ $path_footer = 'application/views/partials/e_footer.php';
 
 
     <script src="<?= base_url('asset/js/vendor.min.js') ?>"></script>
-
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Required datatable js -->
     <script src="<?= base_url('') ?>asset/libs/datatables/jquery.dataTables.min.js"></script>
     <script src="<?= base_url('') ?>asset/libs/datatables/dataTables.bootstrap4.min.js"></script>

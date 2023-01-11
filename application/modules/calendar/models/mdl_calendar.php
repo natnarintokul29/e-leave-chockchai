@@ -63,9 +63,6 @@ class mdl_calendar extends CI_Model
 
         //print_r($query->result());
 
-
-
-
         $data = [];
         foreach ($query->result() as $row) {
             $data_img = [];

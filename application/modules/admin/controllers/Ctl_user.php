@@ -63,4 +63,14 @@ class Ctl_user extends MY_Controller
        echo json_encode($result);
     }
 
+    public function delete_user()
+    {
+        $data = $this->mdl_user->delete_user();
+       $result = array(
+        'data' => $data
+       );
+       
+       echo json_encode($result);
+    }
+
 }

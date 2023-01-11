@@ -49,8 +49,6 @@
 
 
 
-
-
 <!-- Modal -->
 <div id="btn_edit_user_modal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -62,6 +60,9 @@
                 <h4 class="modal-title">ลงทะเบียนเข้าระบบ</h4>
             </div>
             <div class="modal-body">
+                <!-- เพื่อเก็บข้อมูลเลข ไอดี  จากปุ่มแก้ไข -->
+                <input type="hidden" id="hidden_id">
+
                 <form class="form-horizontal" autocomplete="off" id="update_data_user">
 
                     <div class="form-group row">
@@ -120,13 +121,18 @@
             },
 
             "createdRow": function(row, data, index) {
-                let table_btn_edit_user = `<button type="button" class="btn btn-primary btn_edit_user" data-id="${data['ID']}" data-toggle="modal" data-target="#btn_edit_user_modal">แก้ไข</button>`
+                let table_btn_edit_user =
+                    `
+                <button type="button" class="btn btn-primary btn_edit_user" data-id="${data['ID']}" data-toggle="modal" data-target="#btn_edit_user_modal">แก้ไข</button>
+                <button type="button" class="btn btn-danger btn_delete_user" data-id="${data['ID']}">ลบ</button>
+                `
                 $('td', row).eq(5).html(table_btn_edit_user)
             },
 
             dom: datatable_dom,
             buttons: datatable_button,
         })
+
 
         $(document).on('click', '.btn_edit_user', function() {
 
@@ -135,6 +141,8 @@
                 .then(res => res.json())
                 .then((resp) => {
                     modal_input_data(resp.data)
+
+                    $("#hidden_id").val($(this).attr('data-id'));
                 });
         })
 
@@ -143,19 +151,19 @@
             $(".modal #position").val(data.POSITION)
             $(".modal #name").val(data.NAME)
             $(".modal #lastname").val(data.LASTNAME)
-
         }
 
-        $(document).on('submit','#update_data_user',function(){
-            
+        $(document).on('submit', '#update_data_user', function() {
+            let data_hidden_id = $("#hidden_id").val();
+            console.log(data_hidden_id)
             let url_update_user = new URL('admin/ctl_user/update_user', domain);
 
             var data = new FormData();
-            data.append('id', $('.btn_edit_user').attr('data-id'));
-            data.append('position',  $("#position").val());
+            data.append('id', data_hidden_id);
+            data.append('position', $("#position").val());
             data.append('name', $("#name").val());
-            data.append('lastname',  $("#lastname").val());
-                  
+            data.append('lastname', $("#lastname").val());
+
             let option = {
                 method: 'POST',
                 body: data,
@@ -163,11 +171,81 @@
             fetch(url_update_user, option)
                 .then(res => res.json())
                 .then((resp) => {
-                    console.log(resp)
+
+                    let table_tr = $('.btn_edit_user[data-id=' + data_hidden_id + ']').parents('tr');
+
+                    table_tr.children('td').eq(0).html(resp.data.position)
+                    table_tr.children('td').eq(1).html(resp.data.name)
+                    table_tr.children('td').eq(2).html(resp.data.last_name)
+
+                    $('#btn_edit_user_modal').modal('hide')
+
                 })
 
             return false;
         })
+
+        $(document).on('click', '.btn_delete_user', function() {
+            $("#hidden_id").val($(this).attr('data-id'))
+            let hidden_id = $("#hidden_id").val();
+
+            let table_tr = $('.btn_edit_user[data-id=' + hidden_id + ']').parents('tr');
+            let user_name = table_tr.children('td').eq(1).text()+' '+table_tr.children('td').eq(2).text()
+
+            Swal.fire({
+                title: 'ยืนยันการลบ',
+                text: "คุณต้องการลบข้อมูลนี้ "+user_name,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#64c5b1',
+                cancelButtonColor: '#f96a74',
+                confirmButtonText: 'ยืนยัน',
+                cancelButtonText: 'ยกเลิก'
+            }).then((result) => {
+                if (result.value) {
+                    confirm_delete(hidden_id)
+                }
+            })
+        })
+
+        function confirm_delete(id = null) {
+
+            if (id) {
+                let url_delete_user = new URL('admin/ctl_user/delete_user', domain);
+
+                var delete_data = new FormData();
+                delete_data.append('id', id);
+                fetch(url_delete_user, {
+                        method: 'POST',
+                        body: delete_data
+                    })
+                    .then(res => res.json())
+                    .then((resp) => {
+                        if (resp.data.error == 0) {
+                            let table_tr = $('.btn_delete_user[data-id=' + id + ']').parents('tr');
+                            if (table_tr) {
+                                table_tr.remove()
+                            }
+
+                            Swal.fire(
+                                'สำเร็จ',
+                                resp.data.text,
+                                'success'
+                            )
+                        } else {
+                            Swal.fire(
+                                'ผิดพลาด',
+                                resp.data.text,
+                                'warning'
+                            )
+                        }
+
+                        //window.location.reload()
+                    });
+            }
+
+        }
+
 
     })
 </script>
