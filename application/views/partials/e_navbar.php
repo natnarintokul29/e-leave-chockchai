@@ -97,7 +97,9 @@
                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                            <img src="<?= base_url('asset/images/users/avatar-1.jpg') ?>" alt="user-image" class="rounded-circle">
                            <span class="pro-user-name ml-1">
-                               Maxine K <i class="mdi mdi-chevron-down"></i>
+                           <?php 
+                           echo $this->session->userdata('user_name');
+                           ?> <i class="mdi mdi-chevron-down"></i>
                            </span>
                        </a>
                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
@@ -107,7 +109,7 @@
                            </div>
 
                            <!-- item-->
-                           <a href="javascript:void(0);" class="dropdown-item notify-item">
+                           <a href="<?= site_url('profile/ctl_profile/') ?>" class="dropdown-item notify-item">
                                <i class="fe-user"></i>
                                <span>Profile</span>
                            </a>
@@ -116,7 +118,7 @@
                            <div class="dropdown-divider"></div>
 
                            <!-- item-->
-                           <a href="javascript:void(0);" class="dropdown-item notify-item">
+                           <a href="<?= site_url('login/ctl_logout/')?>" class="dropdown-item notify-item">
                                <i class="fe-log-out"></i>
                                <span>Logout</span>
                            </a>
@@ -146,6 +148,8 @@
                        </button>
                    </li>
                </ul>
+
+               
            </div>
            <!-- end Topbar -->
 

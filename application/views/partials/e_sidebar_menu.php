@@ -10,7 +10,7 @@
 
                     <li class="menu-title">steakhouse</li>
 
-                    <li>
+                    <li class="<?= check_permit_menu('dashboard') ?>">
                         <a href="javascript: void(0);">
                             <i class="fe-airplay"></i>
                             <span> รายงาน </span>
@@ -22,7 +22,7 @@
                         </ul>
                     </li>
 
-                    <li>
+                    <li class="<?= check_permit_menu('calendar') ?>">
                         <a href="javascript: void(0);">
                             <i class="fe-sidebar"></i>
                             <span> E-leave </span>
@@ -34,29 +34,18 @@
                         </ul>
                     </li>
 
-                    <li>
-                        <a href="#">
-                            <i class="fe-plus-square"></i>
-                            <span>เงื่อนไขการลา</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="nav-second-level" aria-expanded="false">
-                            <li><a href="extras-about.html">About Us</a></li>
-                            <li><a href="extras-contact.html">Contact</a></li>
-                        </ul>
-                    </li>
+                        <li class="<?= check_permit_menu('admin') ?>">
+                            <a href="#">
+                                <i class="fe-plus-square"></i>
+                                <span>ผู้ดูแล</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="nav-second-level" aria-expanded="false">
+                                <li><a href="<?= site_url('admin/ctl_register') ?>">ลงทะเบียน</a></li>
+                                <li><a href="<?= site_url('admin/ctl_user') ?>">ผู้ใช้งาน</a></li>
+                            </ul>
+                        </li>
 
-                    <li>
-                        <a href="#">
-                            <i class="fe-plus-square"></i>
-                            <span>ผู้ดูแล</span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <ul class="nav-second-level" aria-expanded="false">
-                            <li><a href="<?= site_url('admin/ctl_register') ?>">ละทะเบียน</a></li>
-                            <li><a href="<?= site_url('admin/ctl_user') ?>">ผู้ใช้งาน</a></li>
-                        </ul>
-                    </li>
                 </ul>
 
             </div>

@@ -3,25 +3,7 @@
     <!-- Start Content-->
     <div class="container-fluid">
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Adminox</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">admin</a></li>
-                            <li class="breadcrumb-item active">อนุมัติ</li>
-                        </ol>
-                    </div>
-                    <h4 class="page-title">Admin</h4>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
-
-        <div class="col-12">
+        <div class="">
             <div class="card-box table-responsive">
                 <table id="datatable_staff" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
@@ -79,7 +61,7 @@
                 },
             ],
             "createdRow": function(row, data, index) {
-                let table_btn_verify = `<button type="button" class="btn btn-primary btn_verify" data-id="${data['ID']}">อนุญาต</button>`
+                let table_btn_verify = `<button type="button" class="btn btn-primary btn_verify" data-id="${data['ID']}" data-name="${data['NAME']}" data-lastname="${data['LASTNAME']}">อนุญาต</button>`
                 $('td', row).eq(5).html(table_btn_verify)
 
             },
@@ -98,6 +80,8 @@
             
             var data = new FormData();
             data.append('id', $(this).attr('data-id'))
+            data.append('name', $(this).attr('data-name'))
+            data.append('lastname', $(this).attr('data-lastname'))
             let url = new URL('admin/ctl_register/update_verify', domain);
             let option = {
                 method: 'POST',
@@ -109,6 +93,7 @@
                     if(resp.error){
                         swal.fire('ผิดพลาด',resp.message , 'warning')
                     }else{
+                        swal.fire('สำเร็จ',resp.message , 'success')
                         $(this).parents('tr').remove()
                     }
                 })

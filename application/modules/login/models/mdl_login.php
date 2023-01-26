@@ -23,7 +23,7 @@ class mdl_login extends CI_Model
                 ->where('status', 1)
                 ->get();
 
-            $number = $sql->num_rows();
+            $number = $sql->num_rows();  //num_rows() นับจำนวนแถว
 
             if ($number == 1) {
                 $row = $sql->row();
@@ -34,9 +34,9 @@ class mdl_login extends CI_Model
                     );
                 } else {
                     $result = array(
-                        'error' => 0,
+                        'error' => 1,
                         'text' => 'ชื่อผู้ใช้ ไม่ถูกต้อง',
-                        'data' => $sql->row()
+                        'data' => ''
                     );
                 }
             } else {

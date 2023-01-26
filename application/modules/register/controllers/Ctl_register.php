@@ -8,6 +8,7 @@ class Ctl_register extends MY_Controller {
         parent::__construct();
         $this->load->helper('url', 'form');
         $this->load->model('mdl_register');
+
     }
 
 	public function index()

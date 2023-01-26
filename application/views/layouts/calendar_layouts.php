@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <title> <?php echo $template['title']; ?></title>
@@ -27,6 +28,7 @@
 <?php
 // path
 $path_navbar = 'application/views/partials/e_navbar.php';
+$path_topbar = 'application/views/partials/e_topbar.php';
 $path_sidebar = 'application/views/partials/e_sidebar_menu.php';
 $path_footer = 'application/views/partials/e_footer.php';
 ?>
@@ -47,7 +49,7 @@ $path_footer = 'application/views/partials/e_footer.php';
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
         <div class="content-page">
-
+            <?php include($path_topbar); ?>
             <?php echo $template['body']; ?>
 
             <!-- Footer Start -->
@@ -62,10 +64,10 @@ $path_footer = 'application/views/partials/e_footer.php';
     </div>
     <!-- END wrapper -->
 
-    <script src="<?= base_url('assets/js/vendor.min.js') ?>"></script> 
+    <script src="<?= base_url('asset/js/vendor.min.js') ?>"></script>
 
 
-    
+
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script> -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -78,7 +80,7 @@ $path_footer = 'application/views/partials/e_footer.php';
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-  <script src="<?= base_url('asset/js/app.min.js') ?>"></script>
+    <script src="<?= base_url('asset/js/app.min.js') ?>"></script>
 
 </body>
 

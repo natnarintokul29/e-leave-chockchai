@@ -9,6 +9,8 @@ class Event_calendars extends MY_Controller {
         $this->load->helper('url', 'form');
         $this->load->model('mdl_calendar');
         $this->load->library('image');
+
+        $this->middleware();
     }
 
 	public function index()

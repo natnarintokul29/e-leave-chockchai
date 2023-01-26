@@ -24,6 +24,15 @@
     }
 </style>
 
+<?php
+$this->session->sess_destroy();
+if ($this->session->has_userdata('user_code')) {
+    
+    print_r($this->session->userdata());
+}
+
+?>
+
 <body>
     <div class="authentication-bg bg-primary authentication-bg-pattern d-flex align-items-center pb-0 vh-100">
 
@@ -58,7 +67,7 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-12">
-                                                    <a href="page-recoverpw.html" class="text-muted float-right"><small>ลืมรหัสผ่าน?</small></a>
+                                                    <a class="text-muted float-right"><small>ลืมรหัสผ่าน?</small></a>
                                                     <label for="">รหัสผ่าน</label>
                                                     <input type="password" id="input_password" name="input_password" class="form-control" placeholder="รหัสผ่าน" required>
 
@@ -70,7 +79,10 @@
                                                     <button class="btn btn-md btn-block btn-primary waves-effect waves-light" id="btn_login" type="submit">เข้าสู่ระบบ</button>
                                                 </div>
                                             </div>
+                                            <div class="text-center">
+                                                <?php echo anchor('register/ctl_register', 'หากไม่มีรหัส ลงทะเบียน', 'title="ลงทะเบียน"');?>
 
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -116,10 +128,16 @@
                     })
                     .then(res => res.json())
                     .then((resp) => {
-                        console.log(resp)
+                        if(resp.error != 0){
+                            swal.fire('ผิดพลาด',resp.text,'warning')
+                        }else{
+                            window.location.reload();
+                            
+                        }
                     })
             }
 
+          
         })
     </script>
 

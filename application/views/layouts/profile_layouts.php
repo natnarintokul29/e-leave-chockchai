@@ -9,33 +9,23 @@
     <meta content="Coderthemes" name="author" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.ico') ?>">
+    <link rel="shortcut icon" href="<?= base_url('asset/images/favicon.ico') ?>">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.min.css" rel="stylesheet" media='print'>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script> -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-
-
+    <!-- third party css -->
+    <link href="<?= base_url('') ?>asset/libs/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('') ?>asset/libs/select2/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('') ?>asset/plugins/datatablebutton/datatables.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('') ?>asset/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
 
     <link href="<?= base_url('asset/libs/c3/c3.min.css') ?>" rel="stylesheet" type="text/css" />
 
     <link href="<?= base_url('asset/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
     <link href="<?= base_url('asset/css/icons.min.css') ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('asset/css/app.min.css') ?>" rel="stylesheet" type="text/css" id="app-stylesheet" />
+
+    <!-- <?php rand(1, 1000) ?> ล้างแคช ให้จำค่าใหม่-->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
 
 </head>
 
@@ -53,7 +43,6 @@ $path_footer = 'application/views/partials/e_footer.php';
     <div id="wrapper">
         <!-- Topbar Start -->
         <?php include($path_navbar); ?>
-
         <!-- end Topbar -->
 
         <!-- ========== Left Sidebar Start ========== -->
@@ -79,7 +68,22 @@ $path_footer = 'application/views/partials/e_footer.php';
     </div>
     <!-- END wrapper -->
 
+
     <script src="<?= base_url('asset/js/vendor.min.js') ?>"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Required datatable js -->
+    <script src="<?= base_url('') ?>asset/libs/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?= base_url('') ?>asset/libs/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="<?= base_url('') ?>asset/libs/bootstrap-select/bootstrap-select.min.js"></script>
+    <!-- Buttons examples -->
+    <script src="<?= base_url('') ?>asset/plugins/datatablebutton/datatables.min.js"></script>
+
+    <!-- Responsive examples -->
+    <script src="<?= base_url('') ?>asset/libs/datatables/dataTables.responsive.min.js"></script>
+    <script src="<?= base_url('') ?>asset/libs/datatables/responsive.bootstrap4.min.js"></script>
+
+    <!-- Datatables init -->
+    <script src="<?= base_url('') ?>asset/js/pages/datatables.init.js"></script>
 
 
     <script src="<?= base_url('asset/libs/d3/d3.min.js') ?>"></script>

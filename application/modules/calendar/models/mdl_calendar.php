@@ -40,7 +40,7 @@ class mdl_calendar extends CI_Model
     public function get_data_emp()
     {
         $query = $this->db->select('*')
-            ->get('employee');
+            ->get('emp_type');
 
         return $query->result();
     }
@@ -55,113 +55,64 @@ class mdl_calendar extends CI_Model
 
     public function get_data_calendar()
     {
-        $query = $this->db->select('*')
-            ->from('calendar')
-            ->where('calendar.status', 1)
-            // ->join('calendar_img', 'calendar_img.CALENDAR_ID  = calendar.ID')
-            ->get();
+        $show = 0;
+        $id = $this->session->userdata('user_code');
+        $emp_id = $this->session->userdata('user_emp');
 
-        //print_r($query->result());
+            $sql = $this->db->select('*')
+                ->from('calendar')
+                ->where('calendar.status', 1);
+                
+                if($this->session->userdata('role') != 'admin'){
+                    $sql->where('(calendar.user_staff_id ='.$id.' or calendar.owner1='.$emp_id.' or calendar.owner2='.$emp_id.' or calendar.owner3='.$emp_id.')');
+                }
 
-        $data = [];
-        foreach ($query->result() as $row) {
-            $data_img = [];
-            $query_img = $this->db->select('*')
-                ->from('calendar_img')
-                ->where('calendar_img.calendar_id', $row->ID)
-                ->get();
+                $query = $sql->get();
 
-            foreach ($query_img->result() as $rows) {
+            $data = [];
+            foreach ($query->result() as $row) {
+                $data_img = [];
+                $query_img = $this->db->select('*')
+                    ->from('calendar_img')
+                    ->where('calendar_img.calendar_id', $row->ID)
+                    ->get();
+
+                foreach ($query_img->result() as $rows) {
 
 
-                $data_img[] = array(
-                    'id' => $rows->ID,
-                    'name' => base_url('/asset/image/' . $rows->IMAGE),
-                );
+                    $data_img[] = array(
+                        'id' => $rows->ID,
+                        'name' => base_url('/asset/image/' . $rows->IMAGE),
+                    );
+                }
+
+                $item = [];
+                // $data[] = (object) array('id' => '1');
+                $item['ID'] = $row->ID;
+                $item['EMP_ID'] = $row->EMP_ID;
+                $item['LEAVE_ID'] = $row->LEAVE_ID;
+                $item['DESCRIPTION'] = $row->DESCRIPTION;
+                $item['DATE_START'] = $row->DATE_START;
+                $item['DATE_END'] = $row->DATE_END;
+                $item['LEAVE_TYPE_ID'] = $row->LEAVE_TYPE_ID;
+                $item['TIME_S_ID'] = $row->TIME_S_ID;
+                $item['TIME_E_ID'] = $row->TIME_E_ID;       
+                $item['IMAGE'] = $data_img;
+
+
+                $item['DATE_END_LESS'] = date('Y-m-d', strtotime($row->DATE_END . "-1 days"));
+
+
+                $data[] = (object) $item;
             }
+            $object =  $data;
 
-            $item = [];
-            // $data[] = (object) array('id' => '1');
-            $item['ID'] = $row->ID;
-            $item['EMP_ID'] = $row->EMP_ID;
-            $item['LEAVE_ID'] = $row->LEAVE_ID;
-            $item['DESCRIPTION'] = $row->DESCRIPTION;
-            $item['DATE_START'] = $row->DATE_START;
-            $item['DATE_END'] = $row->DATE_END;
-            $item['LEAVE_TYPE_ID'] = $row->LEAVE_TYPE_ID;
-            $item['TIME_S_ID'] = $row->TIME_S_ID;
-            $item['TIME_E_ID'] = $row->TIME_E_ID;
-            $item['IMAGE'] = $data_img;
-
-
-            $item['DATE_END_LESS'] = date('Y-m-d', strtotime($row->DATE_END . "-1 days"));
-
-
-            $data[] = (object) $item;
-        }
-        $object =  $data;
-
-        return $object;
+            return $object;
+        
     }
 
     public function insert_data_calendar()
     {
-        $file = $_FILES['files'];
-        // $uploadsDir = base_url('asset/image/');
-        $uploadsDir = $this->path_dir;
-        $allowedFileType = $this->allowedFileType;
-        $optional = [
-            'width' => 300
-        ];
-        $img_array = [];
-
-        foreach ($file['name'] as $key => $val) {
-            //	check file for upload
-            if ($file['name'][$key]) {
-                // create array FILE
-
-                $imagefile = array(
-                    'type'        => $file['type'][$key],
-                    'name'        => $file['name'][$key],
-                    'tmp_name'    => $file['tmp_name'][$key],
-                    'error'        => $file['error'][$key],
-                    'size'        => $file['size'][$key]
-                );
-
-                $new_image_name = time() . '.' . explode("/", $file['type'][$key])[1];
-
-                $img_array[] = $new_image_name;
-
-                $targetPath = $uploadsDir . $new_image_name;
-
-
-                $fileType = strtolower(pathinfo($targetPath, PATHINFO_EXTENSION));
-                if (in_array($fileType, $allowedFileType)) {
-                    $check_upload = $this->image->uploadimage($targetPath, $imagefile, $optional);
-                } else {
-                    $text_formatfile = implode(',', $allowedFileType);
-                    $result = array(
-                        'error_code' => 2,
-                        'txt'        => 'รองรับเฉพาะ ' . $text_formatfile
-                    );
-
-                    //return $result;
-                }
-                sleep(1);
-            }
-
-            $result = array(
-                'error_code' => 0,
-                'txt'        => 'อัพโหลดรูปสำเร็จ'
-            );
-
-            //return $result;
-        }
-        //     echo "<pre>";
-        //    print_r($img_array);
-
-        // echo $this->path;
-        //die;
 
         $time_start_hour = $this->input->post('time_start_hour');
         $time_end_hour = $this->input->post('time_end_hour');
@@ -192,6 +143,17 @@ class mdl_calendar extends CI_Model
         $dateEnd = $this->input->post('date_end');
         $date_end = date('Y-m-d', strtotime($dateEnd . "+1 days"));
 
+        // คำนวนจำนวนวันหยุด
+        $date1 = date_create($this->input->post('date_start'));
+        $date2 = date_create($date_end);
+        $diff = date_diff($date1, $date2);
+
+        // เช็คข้อมูล owner
+        $sql_staff = $this->db->select('owner1,owner2,owner3')
+        ->from('staff')
+        ->where('id',$this->session->userdata('user_code'));        
+        $q_staff = $sql_staff->get();
+        $r_staff = $q_staff->row();
 
         $data_array = array(
             'EMP_ID ' => $this->input->post('emp_name'),
@@ -199,22 +161,82 @@ class mdl_calendar extends CI_Model
             'DESCRIPTION' => $this->input->post('description'),
             'DATE_START' => $this->input->post('date_start'),
             'DATE_END' => $date_end,
+            'TOTAL' => $diff->format('%a'),
             'LEAVE_TYPE_ID ' => $this->input->post('leave_type_name'),
             'TIME_S_ID' => $start,
             'TIME_E_ID' => $end,
+            'OWNER1' => $r_staff->owner1 ? $r_staff->owner1 : null,
+            'OWNER2' => $r_staff->owner2 ? $r_staff->owner2 : null,
+            'OWNER3' => $r_staff->owner3 ? $r_staff->owner3 : null,
+            'USER_STAFF_ID' =>  $this->session->userdata('user_code'),
         );
         $this->db->insert('calendar', $data_array);
         $new_id = $this->db->insert_id();
 
-        foreach ($img_array as $key => $val) {
-            $data_img_array = array(
-                'IMAGE ' => $val,
+        $file = $_FILES['files'];
+        if ($file) {
 
-                'CALENDAR_ID ' => $new_id,
-            );
+            // $uploadsDir = base_url('asset/image/');
+            $uploadsDir = $this->path_dir;
+            $allowedFileType = $this->allowedFileType;
+            $optional = [
+                'width' => 300
+            ];
+            $img_array = [];
 
-            $this->db->insert('calendar_img', $data_img_array);
+            foreach ($file['name'] as $key => $val) {
+                //	check file for upload
+                if ($file['name'][$key]) {
+                    // create array FILE
+
+                    $imagefile = array(
+                        'type'        => $file['type'][$key],
+                        'name'        => $file['name'][$key],
+                        'tmp_name'    => $file['tmp_name'][$key],
+                        'error'        => $file['error'][$key],
+                        'size'        => $file['size'][$key]
+                    );
+
+                    $new_image_name = time() . '.' . explode("/", $file['type'][$key])[1];
+
+                    $img_array[] = $new_image_name;
+
+                    $targetPath = $uploadsDir . $new_image_name;
+
+
+                    $fileType = strtolower(pathinfo($targetPath, PATHINFO_EXTENSION));
+                    if (in_array($fileType, $allowedFileType)) {
+                        $check_upload = $this->image->uploadimage($targetPath, $imagefile, $optional);
+                    } else {
+                        $text_formatfile = implode(',', $allowedFileType);
+                        $result = array(
+                            'error_code' => 2,
+                            'txt'        => 'รองรับเฉพาะ ' . $text_formatfile
+                        );
+
+                        //return $result;
+                    }
+                    sleep(1);
+                }
+
+                $result = array(
+                    'error_code' => 0,
+                    'txt'        => 'อัพโหลดรูปสำเร็จ'
+                );
+
+                //return $result;
+            }
+            foreach ($img_array as $key => $val) {
+                $data_img_array = array(
+                    'IMAGE ' => $val,
+
+                    'CALENDAR_ID ' => $new_id,
+                );
+
+                $this->db->insert('calendar_img', $data_img_array);
+            }
         }
+
 
 
         if ($new_id) { //ถ้าค้นหาไอดีเจอแล้ว เป็น จริง
@@ -227,39 +249,39 @@ class mdl_calendar extends CI_Model
             $query_img = $this->db->select('*')
                 ->where('calendar_id', $new_id)
                 ->get('calendar_img');
-  
-            
+
+
 
 
             $item = [];
             $data_img = [];
 
-            foreach($query_img->result() as $row_img){
+            foreach ($query_img->result() as $row_img) {
 
                 $data_img[] = array(
                     'id' => $row_img->ID,
                     'name' => base_url('/asset/image/' . $row_img->IMAGE),
                 );
             }
-                $item['ID'] = $row->ID;
-                $item['EMP_ID'] = $row->EMP_ID;
-                $item['LEAVE_ID'] = $row->LEAVE_ID;
-                $item['DESCRIPTION'] = $row->DESCRIPTION;
-                $item['DATE_START'] = $row->DATE_START;
-                $item['DATE_END'] = $row->DATE_END;
-                $item['LEAVE_TYPE_ID'] = $row->LEAVE_TYPE_ID;
-                $item['TIME_S_ID'] = $row->TIME_S_ID;
-                $item['TIME_E_ID'] = $row->TIME_E_ID;
-                $item['IMAGE'] = $data_img;
-    
-                $item['DATE_END_LESS'] = date('Y-m-d', strtotime($row->DATE_END . "-1 days"));
-                $data[] = $item;
-    
-                $result = [
-                    // $query->result()
-                    'query' => $data,
-    
-                ];
+            $item['ID'] = $row->ID;
+            $item['EMP_ID'] = $row->EMP_ID;
+            $item['LEAVE_ID'] = $row->LEAVE_ID;
+            $item['DESCRIPTION'] = $row->DESCRIPTION;
+            $item['DATE_START'] = $row->DATE_START;
+            $item['DATE_END'] = $row->DATE_END;
+            $item['LEAVE_TYPE_ID'] = $row->LEAVE_TYPE_ID;
+            $item['TIME_S_ID'] = $row->TIME_S_ID;
+            $item['TIME_E_ID'] = $row->TIME_E_ID;
+            $item['IMAGE'] = $data_img;
+
+            $item['DATE_END_LESS'] = date('Y-m-d', strtotime($row->DATE_END . "-1 days"));
+            $data[] = $item;
+
+            $result = [
+                // $query->result()
+                'query' => $data,
+
+            ];
         } else { //ถ้าหาไอดีไม่เจอ แสดง 'no success'
             $result = [
                 'status' => 'no success'
@@ -309,8 +331,6 @@ class mdl_calendar extends CI_Model
                     if (in_array($fileType, $allowedFileType)) {
 
                         $check_upload = $this->image->uploadimage($targetPath, $imagefile, $optional);
-
-
                     } else {
                         $text_formatfile = implode(',', $allowedFileType);
                         $result = array(
@@ -366,7 +386,11 @@ class mdl_calendar extends CI_Model
         $dateEnd = $this->input->post('date_end_up');
         $date_end = date('Y-m-d', strtotime($dateEnd . "+1 days"));
 
-
+        // คำนวนจำนวนวันหยุด
+        $date1 = date_create($this->input->post('date_start_up'));
+        $date2 = date_create($date_end);
+        $diff = date_diff($date1, $date2);
+      
         $data_array = array(
             'ID' => $this->input->post('user_id_up'),
 
@@ -375,9 +399,11 @@ class mdl_calendar extends CI_Model
             'DESCRIPTION' => $this->input->post('description_up'),
             'DATE_START' => $this->input->post('date_start_up'),
             'DATE_END' => $date_end,
+            'TOTAL' => $diff->format('%a'),
             'LEAVE_TYPE_ID ' => $this->input->post('leave_type_name_up'),
             'TIME_S_ID' => $start_up,
             'TIME_E_ID' => $end_up,
+            'USER_STAFF_ID' =>  $this->session->userdata('user_code'),
         );
 
         $id = $data_array['ID'];
@@ -410,14 +436,14 @@ class mdl_calendar extends CI_Model
             $query_img = $this->db->select('*')
                 ->where('calendar_id', $id)
                 ->get('calendar_img');
-  
-            
+
+
 
 
             $item = [];
             $data_img = [];
 
-            foreach($query_img->result() as $row_img){
+            foreach ($query_img->result() as $row_img) {
 
                 $data_img[] = array(
                     'id' => $row_img->ID,

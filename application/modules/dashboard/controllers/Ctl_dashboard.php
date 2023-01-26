@@ -7,7 +7,7 @@ class Ctl_dashboard extends MY_Controller {
     {
         parent::__construct();
 
-     
+        $this->middleware();
 		
     }
 

@@ -9,6 +9,8 @@ class Ctl_register extends MY_Controller
         parent::__construct();
 
         $this->load->model('mdl_register');
+
+        $this->middleware();
     }
 
     public function index()
@@ -52,12 +54,12 @@ class Ctl_register extends MY_Controller
     public function update_verify()
     {
         $verify = $this->mdl_register->update_verify();
-        if ($verify) {
+        if ($verify['error']==0) {
             $error = 0;
             $message = 'ยืนยันตัวตนแล้ว ';
         } else {
             $error = 1;
-            $message = 'ไม่พบ ID ';
+            $message = $verify['text'];
         }
         $result = array(
             'error' => $error,

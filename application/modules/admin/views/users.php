@@ -3,26 +3,16 @@
     <!-- Start Content-->
     <div class="container-fluid">
 
-        <!-- start page title -->
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">Adminox</a></li>
-                            <li class="breadcrumb-item"><a href="javascript: void(0);">admin</a></li>
-                            <li class="breadcrumb-item active">ผู้ใช้งาน</li>
-                        </ol>
-                    </div>
-                    <h4 class="page-title">Users</h4>
-                </div>
-            </div>
-        </div>
-        <!-- end page title -->
-
-
-        <div class="col-12">
+        <div class="">
             <div class="card-box table-responsive">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Button trigger modal  -->
+                        <button type="button" id="register" class="btn btn-primary" data-id="" data-toggle="modal" data-target="#btn_register_user_modal">ลงทะเบียน</button>
+
+                    </div>
+                </div>
                 <table id="datatable_users" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                         <tr>
@@ -74,6 +64,7 @@
                                 <option value="burger">burger</option>
                                 <option value="warehouse">warehouse</option>
                                 <option value="crmline">crmline</option>
+                                <option value="md">md</option>
                             </select>
                         </div>
                     </div>
@@ -92,6 +83,53 @@
                         </div>
                     </div>
 
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="">ผู้อนุมัติ1</label>
+                            <select name="owner1" id="owner1" class="form-control select_owner">
+                                <option value="" selected>เลือกผู้อนุมัติ</option>
+                                <?php
+                                if ($sql_owner) {
+                                    foreach ($sql_owner as $row) {
+                                        echo "<option value='$row->ID'>$row->NAME</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="">ผู้อนุมัติ2</label>
+                            <select name="owner2" id="owner2" class="form-control select_owner">
+                                <option value="" selected>เลือกผู้อนุมัติ</option>
+                                <?php
+                                if ($sql_owner) {
+                                    foreach ($sql_owner as $row) {
+                                        echo "<option value='$row->ID'>$row->NAME</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="">ผู้อนุมัติ3</label>
+                            <select name="owner3" id="owner3" class="form-control select_owner">
+                                <option value="" selected>เลือกผู้อนุมัติ</option>
+                                <?php
+                                if ($sql_owner) {
+                                    foreach ($sql_owner as $row) {
+                                        echo "<option value='$row->ID'>$row->NAME</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group row text-center mt-2">
                         <div class="col-12">
                             <button class="btn btn-md btn-block btn-primary waves-effect waves-light" id="btn_update_user" type="submit">บันทึก</button>
@@ -106,11 +144,155 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div id="btn_register_user_modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
 
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">ลงทะเบียนเข้าระบบ</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" autocomplete="off" id="login">
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="">ตำแหน่งงาน</label>
+                            <select name="position" id="position" class="form-control position" required>
+                                <option value="">ระบุตำแหน่งงาน</option>
+                                <option value="programmer">programmer</option>
+                                <option value="burger">burger</option>
+                                <option value="warehouse">warehouse</option>
+                                <option value="crmline">crmline</option>
+                                <option value="md">md</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="">ชื่อ</label>
+                            <input class="form-control" type="text" id="name" name="name" placeholder="ชื่อภาษาไทย" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="">นามสกุล</label>
+                            <input class="form-control" type="text" id="lastname" name="lastname" placeholder="นามสกุลภาษาไทย" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="">ชื่อผู้ใช้</label>
+                            <input type="text" id="input_username" name="input_username" class="form-control" placeholder="ชื่อผู้ใช้" required>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <label for="">รหัสผ่าน</label>
+                            <input type="password" id="input_password" name="input_password" class="form-control" placeholder="รหัสผ่าน" required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row text-center mt-2">
+                        <div class="col-12">
+                            <button class="btn btn-md btn-block btn-primary waves-effect waves-light" id="btn_register" type="submit">ลงทะเบียน</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 
 <script>
     $(document).ready(function() {
+
+        // url
+        let domain = window.location.protocol + '//' + window.location.hostname + '/' + window.location.pathname.split('/')[1] + '/'
+
+        $(document).ready(function() {
+            $(document).on('submit', '#login', function() {
+
+                register();
+
+                return false;
+            })
+
+
+            function register() {
+                //serializeArray() สามารถส่งข้อมูล fromไปพร้อมกัน โดยไม่ต้องมาใส่ value ใน append ที่ละตัว
+                var dataArray = $("#login").serializeArray(),
+                    len = dataArray.length,
+                    dataObj = {};
+                //length ให้นับข้อมูลใน dataArray
+                // console.log(dataArray);return false;
+
+                let url = new URL('admin/ctl_user/insert_data_staff', domain);
+
+                let data = new FormData();
+                for (i = 0; i < len; i++) {
+                    data.append(dataArray[i].name, dataArray[i].value);
+                }
+
+                fetch(url, {
+                        method: 'POST',
+                        body: data
+                    })
+                    .then(res => res.json())
+                    .then((resp) => {
+                        if (resp.error == 1) {
+                            swal.fire('ผิดพลาด', resp.txt, 'warning')
+                        } else {
+                            // swal.fire('สำเร็จ', resp.txt, 'success')
+
+                            // window.location.reload();
+
+                            let timerInterval
+                            Swal.fire({
+                                title: 'สำเร็จ',
+                                html: resp.txt,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                    // const b = Swal.getHtmlContainer().querySelector('b')
+                                    // timerInterval = setInterval(() => {
+                                    //     b.textContent = Swal.getTimerLeft()
+                                    // }, 100)
+                                },
+                                willClose: () => {
+                                    // clearInterval(timerInterval)
+                                }
+                            }).then((result) => {
+                                /* Read more about handling dismissals below */
+                                // if (result.dismiss === Swal.DismissReason.timer) {
+                                // }
+                                window.location.reload();
+                            })
+                        }
+
+
+                    });
+            }
+
+
+
+
+        });
+
+
+
         let url_user = new URL('admin/ctl_user/fetch_data', domain);
 
         $('#datatable_users').DataTable({
@@ -128,6 +310,7 @@
                 `
                 $('td', row).eq(5).html(table_btn_edit_user)
             },
+
 
             dom: datatable_dom,
             buttons: datatable_button,
@@ -147,15 +330,21 @@
         })
 
         function modal_input_data(data = []) {
+            let modal_name = $("#btn_edit_user_modal")
 
-            $(".modal #position").val(data.POSITION)
-            $(".modal #name").val(data.NAME)
-            $(".modal #lastname").val(data.LASTNAME)
+            modal_name.find("#position").val(data.POSITION)
+            modal_name.find("#name").val(data.NAME)
+            modal_name.find("#lastname").val(data.LASTNAME)
+
+            modal_name.find('select#owner1', 'option[value="' + data.OWNER1 + ']').val(data.OWNER1)
+            modal_name.find('select#owner2', 'option[value=' + data.OWNER2 + ']').val(data.OWNER2)
+            modal_name.find('select#owner3', 'option[value=' + data.OWNER3 + ']').val(data.OWNER3)
+
         }
 
         $(document).on('submit', '#update_data_user', function() {
             let data_hidden_id = $("#hidden_id").val();
-            console.log(data_hidden_id)
+
             let url_update_user = new URL('admin/ctl_user/update_user', domain);
 
             var data = new FormData();
@@ -163,6 +352,9 @@
             data.append('position', $("#position").val());
             data.append('name', $("#name").val());
             data.append('lastname', $("#lastname").val());
+            data.append('owner1', $("#owner1").val());
+            data.append('owner2', $("#owner2").val());
+            data.append('owner3', $("#owner3").val());
 
             let option = {
                 method: 'POST',
@@ -190,11 +382,11 @@
             let hidden_id = $("#hidden_id").val();
 
             let table_tr = $('.btn_edit_user[data-id=' + hidden_id + ']').parents('tr');
-            let user_name = table_tr.children('td').eq(1).text()+' '+table_tr.children('td').eq(2).text()
+            let user_name = table_tr.children('td').eq(1).text() + ' ' + table_tr.children('td').eq(2).text()
 
             Swal.fire({
                 title: 'ยืนยันการลบ',
-                text: "คุณต้องการลบข้อมูลนี้ "+user_name,
+                text: "คุณต้องการลบข้อมูลนี้ " + user_name,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#64c5b1',

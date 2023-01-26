@@ -14,7 +14,7 @@
     <!-- third party css -->
     <link href="<?= base_url('') ?>asset/libs/datatables/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
 
-    <link href="<?= base_url('') ?>asset/plugins/datatablebutton/datatables.min.css?id=<?php rand(1, 1000) ?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('') ?>asset/plugins/datatablebutton/datatables.min.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('') ?>asset/libs/datatables/responsive.bootstrap4.css" rel="stylesheet" type="text/css" />
 
     <link href="<?= base_url('asset/libs/c3/c3.min.css') ?>" rel="stylesheet" type="text/css" />
@@ -23,9 +23,7 @@
     <link href="<?= base_url('asset/css/icons.min.css') ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('asset/css/app.min.css') ?>" rel="stylesheet" type="text/css" id="app-stylesheet" />
 
-    <!-- <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css?id=<?php rand(1, 1000) ?>" />
-     --> 
-     <!-- <?php rand(1, 1000) ?> ล้างแคช ให้จำค่าใหม่-->
+    <!-- <?php rand(1, 1000) ?> ล้างแคช ให้จำค่าใหม่-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 
@@ -34,6 +32,7 @@
 <?php
 // path
 $path_navbar = 'application/views/partials/e_navbar.php';
+$path_topbar = 'application/views/partials/e_topbar.php';
 $path_sidebar = 'application/views/partials/e_sidebar_menu.php';
 $path_footer = 'application/views/partials/e_footer.php';
 ?>
@@ -54,7 +53,7 @@ $path_footer = 'application/views/partials/e_footer.php';
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
         <div class="content-page">
-
+            <?php include($path_topbar); ?>
             <?php echo $template['body']; ?>
 
             <!-- Footer Start -->
@@ -76,7 +75,7 @@ $path_footer = 'application/views/partials/e_footer.php';
     <script src="<?= base_url('') ?>asset/libs/datatables/jquery.dataTables.min.js"></script>
     <script src="<?= base_url('') ?>asset/libs/datatables/dataTables.bootstrap4.min.js"></script>
     <!-- Buttons examples -->
-    <script src="<?= base_url('') ?>asset/plugins/datatablebutton/datatables.min.js?id=<?php rand(1, 1000) ?>"></script>
+    <script src="<?= base_url('') ?>asset/plugins/datatablebutton/datatables.min.js"></script>
 
     <!-- Responsive examples -->
     <script src="<?= base_url('') ?>asset/libs/datatables/dataTables.responsive.min.js"></script>

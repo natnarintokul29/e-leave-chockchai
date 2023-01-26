@@ -55,6 +55,7 @@
                                                         <option value="burger">burger</option>
                                                         <option value="warehouse">warehouse</option>
                                                         <option value="crmline">crmline</option>
+                                                        <option value="admin">admin</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -82,7 +83,6 @@
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-12">
-                                                    <a href="page-recoverpw.html" class="text-muted float-right"><small>ลืมรหัสผ่าน?</small></a>
                                                     <label for="">รหัสผ่าน</label>
                                                     <input type="password" id="input_password" name="input_password" class="form-control" placeholder="รหัสผ่าน" required>
 
@@ -91,7 +91,7 @@
 
                                             <div class="form-group row text-center mt-2">
                                                 <div class="col-12">
-                                                    <button class="btn btn-md btn-block btn-primary waves-effect waves-light" id="btn_register" type="submit">เข้าระบบ</button>
+                                                    <button class="btn btn-md btn-block btn-primary waves-effect waves-light" id="btn_register" type="submit">ลงทะเบียน</button>
                                                 </div>
                                             </div>
 
