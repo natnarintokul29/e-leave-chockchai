@@ -6,11 +6,14 @@ class mdl_register extends CI_Model
     public function __construct()
     {
         parent::__construct();
-
     }
 
-    public function insert_data_login()
-    {
+    //     public function insert_data_login()
+    //     {
 
+    //     }
+    public function get_data_register()
+    {
+        
     }
 }

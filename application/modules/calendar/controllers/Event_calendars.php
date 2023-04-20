@@ -15,10 +15,13 @@ class Event_calendars extends MY_Controller {
 
 	public function index()
 	{
+        // echo "<pre>";
+        // print_r($this->session->userdata());
         $data['leave_type'] = $this->mdl_calendar->get_data_leave_type();
         $data['time_s_e'] = $this->mdl_calendar->get_data_time_s_e();    
         $data['emp'] = $this->mdl_calendar->get_data_emp();
         $data['leave'] = $this->mdl_calendar->get_data_leave();
+        $data['calendar'] = $this->mdl_calendar->get_data_calendar_user_staff();
 
 
 		$this->template->set_layout('calendar_layouts');

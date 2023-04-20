@@ -10,6 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <!-- App favicon -->
     <!-- <link rel="shortcut icon" href="<?= base_url('asset/images/favicon.ico') ?>"> -->
+    <link rel="stylesheet" href="<?= base_url('asset/libs/select2/select2.min.css'); ?>" type="text/css" />
 
     <!-- App css -->
     <link href="<?= base_url('asset/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
@@ -56,6 +57,95 @@
                                                         <option value="warehouse">warehouse</option>
                                                         <option value="crmline">crmline</option>
                                                         <option value="admin">admin</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <!-- <div class="form-group row">
+                                                <div class="col-12">
+                                                    <label for="">ลักษณะงาน</label>
+                                                    <select name="charactor" id="position" class="form-control position" required>
+                                                        <option value="">ระบุลักษณะงาน</option>
+                                                        <option value="แม่บ้าน">แม่บ้าน</option>
+                                                        <option value="พนักงานออฟฟิศ">พนักงานออฟฟิศ</option>
+                                                        <option value="พนักงานบริการ">พนักงานบริการ</option>
+                                                        <option value="crmline">crmline</option>
+                                                        <option value="admin">admin</option>
+                                                    </select>
+                                                </div>
+                                            </div> -->
+
+                                            <div class="col-lg-6">
+
+                                                <div class="card-box">
+                                                    <h4 class="header-title">Select2</h4>
+                                                    <label class="mb-1 mt-3 text-muted">Single Select</label>
+                                                    <p class="sub-header">
+                                                        Select2 can take a regular select box like this...
+                                                    </p>
+
+                                                    <select class="form-control select2" data-toggle="select2">
+                                                        <option>Select</option>
+                                                        <optgroup label="Alaskan/Hawaiian Time Zone">
+                                                            <option value="AK">Alaska</option>
+                                                            <option value="HI">Hawaii</option>
+                                                        </optgroup>
+                                                        <optgroup label="Pacific Time Zone">
+                                                            <option value="CA">California</option>
+                                                            <option value="NV">Nevada</option>
+                                                            <option value="OR">Oregon</option>
+                                                            <option value="WA">Washington</option>
+                                                        </optgroup>
+                                                        <optgroup label="Mountain Time Zone">
+                                                            <option value="AZ">Arizona</option>
+                                                            <option value="CO">Colorado</option>
+                                                            <option value="ID">Idaho</option>
+                                                            <option value="MT">Montana</option>
+                                                            <option value="NE">Nebraska</option>
+                                                            <option value="NM">New Mexico</option>
+                                                            <option value="ND">North Dakota</option>
+                                                            <option value="UT">Utah</option>
+                                                            <option value="WY">Wyoming</option>
+                                                        </optgroup>
+                                                        <optgroup label="Central Time Zone">
+                                                            <option value="AL">Alabama</option>
+                                                            <option value="AR">Arkansas</option>
+                                                            <option value="IL">Illinois</option>
+                                                            <option value="IA">Iowa</option>
+                                                            <option value="KS">Kansas</option>
+                                                            <option value="KY">Kentucky</option>
+                                                            <option value="LA">Louisiana</option>
+                                                            <option value="MN">Minnesota</option>
+                                                            <option value="MS">Mississippi</option>
+                                                            <option value="MO">Missouri</option>
+                                                            <option value="OK">Oklahoma</option>
+                                                            <option value="SD">South Dakota</option>
+                                                            <option value="TX">Texas</option>
+                                                            <option value="TN">Tennessee</option>
+                                                            <option value="WI">Wisconsin</option>
+                                                        </optgroup>
+                                                        <optgroup label="Eastern Time Zone">
+                                                            <option value="CT">Connecticut</option>
+                                                            <option value="DE">Delaware</option>
+                                                            <option value="FL">Florida</option>
+                                                            <option value="GA">Georgia</option>
+                                                            <option value="IN">Indiana</option>
+                                                            <option value="ME">Maine</option>
+                                                            <option value="MD">Maryland</option>
+                                                            <option value="MA">Massachusetts</option>
+                                                            <option value="MI">Michigan</option>
+                                                            <option value="NH">New Hampshire</option>
+                                                            <option value="NJ">New Jersey</option>
+                                                            <option value="NY">New York</option>
+                                                            <option value="NC">North Carolina</option>
+                                                            <option value="OH">Ohio</option>
+                                                            <option value="PA">Pennsylvania</option>
+                                                            <option value="RI">Rhode Island</option>
+                                                            <option value="SC">South Carolina</option>
+                                                            <option value="VT">Vermont</option>
+                                                            <option value="VA">Virginia</option>
+                                                            <option value="WV">West Virginia</option>
+                                                        </optgroup>
                                                     </select>
                                                 </div>
                                             </div>
@@ -113,6 +203,7 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
+    <script src="<?= base_url(); ?>asset/libs/select2/select2.min.js"></script>
     <!-- Sweet alert -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -128,6 +219,7 @@
                 return false;
             })
 
+            $('[data-toggle=select2]').select2();
 
             function register() {
                 //serializeArray() สามารถส่งข้อมูล fromไปพร้อมกัน โดยไม่ต้องมาใส่ value ใน append ที่ละตัว

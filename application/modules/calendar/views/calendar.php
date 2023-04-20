@@ -44,27 +44,32 @@
                             <input type="hidden" id="method_edit" value="">
                             <input type="hidden" id="user-id" value="">
                             <div class="mb-3">
-                                <h3>ชื่อผู้ใช้: <?php echo $this->session->userdata('user_name') ?></h3>
+                                <h3>ชื่อผู้ใช้ :<?php echo $this->session->userdata('user_name') ?></h3>
+                                <h3>ชื่อผู้ใช้ :<?= $calendar->NAME ?></h3>
                             </div>
-                            <div class="mb-3">
-                                <select class="form-select" id="leave" required aria-label="select leave" name="leave">
-                                    <option value="">ระบุการลา</option>
-                                    <?php
-                                    foreach ($leave as $data) {
-                                        $selected = '';
-                                        if ($data->ID == 3) {
-                                            // $selected = 'selected';
+                            <!-- ระบุการลา -->
+                            <div class="mb-4 leave_day_type">
+                                <div class="dropdown">
+
+                                    <select name="leave" id="leave_type_name" class="form-select leave_type_name" required>
+                                        <option value="">ระบุการลา</option>
+                                        <?php
+                                        foreach ($leave_type as $data) {
+
+                                            $selected = '';
+                                            if ($data->ID == 1) {
+                                                $selected = 'selected';
+                                            }
+                                        ?>
+                                            <option value="<?= $data->ID; ?>"><?= $data->LEAVE_TYPE_NAME; ?></option>
+                                        <?php
                                         }
+                                        ?>
 
-                                    ?>
-                                        <option <?php echo $selected; ?> value="<?= $data->ID; ?>"><?= $data->LEAVE_NAME; ?></option>
-                                    <?php
-                                    }
-                                    ?>
-
-
-                                </select>
+                                    </select>
+                                </div>
                             </div>
+
                             <div class="mb-3">
                                 <textarea class="form-control is-invalid rounded-2 border-4" id="description" placeholder="โปรดระบุ เหตุผลการลา" name="description" required></textarea>
                             </div>
@@ -85,7 +90,7 @@
 
                             </ul>
                         </div> -->
-
+                            <!-- ระบุตำแหน่งจะไม่ใช้แล้ว -->
                             <div class="mb-4">
                                 <div class="dropdown">
 
@@ -101,28 +106,26 @@
                                     </select>
                                 </div>
                             </div>
+                            <!-- ระบุตำแหน่งจะไม่ใช้แล้ว -->
 
-
-                            <div class="mb-4 leave_day_type">
-                                <div class="dropdown">
-
-                                    <select name="leave_type_name" id="leave_type_name" class="form-select leave_type_name" required>
-                                        <option value="">ระบุช่วงเวลา ลา</option>
-                                        <?php
-                                        foreach ($leave_type as $data) {
-
-                                            $selected = '';
-                                            if ($data->ID == 1) {
-                                                $selected = 'selected';
-                                            }
-                                        ?>
-                                            <option value="<?= $data->ID; ?>"><?= $data->LEAVE_TYPE_NAME; ?></option>
-                                        <?php
+                            <div class="mb-3">
+                                <select class="form-select" id="leave" required aria-label="select leave" name="leave_type_name">
+                                    <option value="">ระบุช่วงเวลา ลา</option>
+                                    <?php
+                                    foreach ($leave as $data) {
+                                        $selected = '';
+                                        if ($data->ID == 3) {
+                                            // $selected = 'selected';
                                         }
-                                        ?>
 
-                                    </select>
-                                </div>
+                                    ?>
+                                        <option <?php echo $selected; ?> value="<?= $data->ID; ?>"><?= $data->LEAVE_NAME; ?></option>
+                                    <?php
+                                    }
+                                    ?>
+
+
+                                </select>
                             </div>
 
 
@@ -381,41 +384,45 @@
 
         return response.json()
     }
+    test();
+    function test() {
+        console.log("test");
+    }
 
     get_data()
         .then((data) => {
-                // JSON data parsed by `data.json()` call
+            // JSON data parsed by `data.json()` call
 
-                var set_event = [];
-                $.each(data.result, function(key, value) {
-                    let class_name = '';
-                        if (value.LEAVE_ID == 1) {
-                          class_name = 'bg-primary';
-                        } else if (value.LEAVE_ID == 2) {
-                          class_name = 'bg-warning';
-                        } else {
-                          class_name = 'bg-danger';
-                        }
+            var set_event = [];
+            $.each(data.result, function(key, value) {
+                let class_name = '';
+                if (value.LEAVE_ID == 1) {
+                    class_name = 'bg-primary';
+                } else if (value.LEAVE_ID == 2) {
+                    class_name = 'bg-warning';
+                } else {
+                    class_name = 'bg-danger';
+                }
 
-                        set_event.push({
-                            id: value.ID,
-                            emp: value.EMP_ID,
-                            leave: value.LEAVE_ID,
-                            title: value.DESCRIPTION,
-                            start: value.DATE_START,
-                            end: value.DATE_END,
-                            l_n: value.LEAVE_TYPE_ID,
-                            t_s: value.TIME_S_ID,
-                            t_e: value.TIME_E_ID,
-                            end_less: value.DATE_END_LESS,
-                            image: value.IMAGE,
-                            c_id: value.CALENDAR_ID,
-                            className: class_name
-                            // color: '#0dcaf0',
-                        })
-                 
-
+                set_event.push({
+                    id: value.ID,
+                    emp: value.EMP_ID,
+                    leave: value.LEAVE_ID,
+                    title: value.DESCRIPTION,
+                    start: value.DATE_START,
+                    end: value.DATE_END,
+                    l_n: value.LEAVE_TYPE_ID,
+                    t_s: value.TIME_S_ID,
+                    t_e: value.TIME_E_ID,
+                    end_less: value.DATE_END_LESS,
+                    image: value.IMAGE,
+                    c_id: value.CALENDAR_ID,
+                    className: class_name
+                    // color: '#0dcaf0',
                 })
+
+
+            })
             //console.log(set_event[0].title)
             // console.log(set_event)
 

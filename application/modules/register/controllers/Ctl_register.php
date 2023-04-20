@@ -13,7 +13,7 @@ class Ctl_register extends MY_Controller {
 
 	public function index()
 	{
-       	
+        $data['register'] = $this->mdl_register->get_data_register(); // select2 ของการเลือกรายชื่อผู้ที่ไม่เคยลงทะเบียน
         $this->load->view('register');
 	}
 

@@ -18,7 +18,21 @@ class mdl_calendar extends CI_Model
     }
 
     // private $path = 'asset/image';
+    public function get_data_calendar_user_staff()
+    {
+        $id = $this->session->userdata('user_code');
+        $emp_id = $this->session->userdata('user_emp');
 
+        $sql_staff = $this->db->select('*')
+            ->from('calendar')
+            ->join('staff', 'staff.id = calendar.user_staff_id')
+            ->where('(calendar.user_staff_id =' . $id . ' or calendar.owner1=' . $emp_id . ' or calendar.owner2=' . $emp_id . ' or calendar.owner3=' . $emp_id . ')');
+        $q_staff = $sql_staff->get();
+        $r_staff = $q_staff->row();
+
+        $result = json_encode($r_staff);
+        return $result;
+    }
 
     public function get_data_leave_type()
     {
@@ -59,56 +73,55 @@ class mdl_calendar extends CI_Model
         $id = $this->session->userdata('user_code');
         $emp_id = $this->session->userdata('user_emp');
 
-            $sql = $this->db->select('*')
-                ->from('calendar')
-                ->where('calendar.status', 1);
-                
-                if($this->session->userdata('role') != 'admin'){
-                    $sql->where('(calendar.user_staff_id ='.$id.' or calendar.owner1='.$emp_id.' or calendar.owner2='.$emp_id.' or calendar.owner3='.$emp_id.')');
-                }
+        $sql = $this->db->select('*')
+            ->from('calendar')
+            ->where('calendar.status', 1);
 
-                $query = $sql->get();
+        if ($this->session->userdata('role') != 'admin') {
+            $sql->where('(calendar.user_staff_id =' . $id . ' or calendar.owner1=' . $emp_id . ' or calendar.owner2=' . $emp_id . ' or calendar.owner3=' . $emp_id . ')');
+        }
 
-            $data = [];
-            foreach ($query->result() as $row) {
-                $data_img = [];
-                $query_img = $this->db->select('*')
-                    ->from('calendar_img')
-                    ->where('calendar_img.calendar_id', $row->ID)
-                    ->get();
+        $query = $sql->get();
 
-                foreach ($query_img->result() as $rows) {
+        $data = [];
+        foreach ($query->result() as $row) {
+            $data_img = [];
+            $query_img = $this->db->select('*')
+                ->from('calendar_img')
+                ->where('calendar_img.calendar_id', $row->ID)
+                ->get();
 
-
-                    $data_img[] = array(
-                        'id' => $rows->ID,
-                        'name' => base_url('/asset/image/' . $rows->IMAGE),
-                    );
-                }
-
-                $item = [];
-                // $data[] = (object) array('id' => '1');
-                $item['ID'] = $row->ID;
-                $item['EMP_ID'] = $row->EMP_ID;
-                $item['LEAVE_ID'] = $row->LEAVE_ID;
-                $item['DESCRIPTION'] = $row->DESCRIPTION;
-                $item['DATE_START'] = $row->DATE_START;
-                $item['DATE_END'] = $row->DATE_END;
-                $item['LEAVE_TYPE_ID'] = $row->LEAVE_TYPE_ID;
-                $item['TIME_S_ID'] = $row->TIME_S_ID;
-                $item['TIME_E_ID'] = $row->TIME_E_ID;       
-                $item['IMAGE'] = $data_img;
+            foreach ($query_img->result() as $rows) {
 
 
-                $item['DATE_END_LESS'] = date('Y-m-d', strtotime($row->DATE_END . "-1 days"));
-
-
-                $data[] = (object) $item;
+                $data_img[] = array(
+                    'id' => $rows->ID,
+                    'name' => base_url('/asset/image/' . $rows->IMAGE),
+                );
             }
-            $object =  $data;
 
-            return $object;
-        
+            $item = [];
+            // $data[] = (object) array('id' => '1');
+            $item['ID'] = $row->ID;
+            $item['EMP_ID'] = $row->EMP_ID;
+            $item['LEAVE_ID'] = $row->LEAVE_ID;
+            $item['DESCRIPTION'] = $row->DESCRIPTION;
+            $item['DATE_START'] = $row->DATE_START;
+            $item['DATE_END'] = $row->DATE_END;
+            $item['LEAVE_TYPE_ID'] = $row->LEAVE_TYPE_ID;
+            $item['TIME_S_ID'] = $row->TIME_S_ID;
+            $item['TIME_E_ID'] = $row->TIME_E_ID;
+            $item['IMAGE'] = $data_img;
+
+
+            $item['DATE_END_LESS'] = date('Y-m-d', strtotime($row->DATE_END . "-1 days"));
+
+
+            $data[] = (object) $item;
+        }
+        $object =  $data;
+
+        return $object;
     }
 
     public function insert_data_calendar()
@@ -150,8 +163,8 @@ class mdl_calendar extends CI_Model
 
         // เช็คข้อมูล owner
         $sql_staff = $this->db->select('owner1,owner2,owner3')
-        ->from('staff')
-        ->where('id',$this->session->userdata('user_code'));        
+            ->from('staff')
+            ->where('id', $this->session->userdata('user_code'));
         $q_staff = $sql_staff->get();
         $r_staff = $q_staff->row();
 
@@ -383,14 +396,15 @@ class mdl_calendar extends CI_Model
         $start_up =  $row_s->START;
         $end_up =  $row_e->END;
 
-        $dateEnd = $this->input->post('date_end_up');
-        $date_end = date('Y-m-d', strtotime($dateEnd . "+1 days"));
+        // $dateEnd = $this->input->post('date_end_up');
+        // $date_end = date('Y-m-d', strtotime($dateEnd . "+1 days"));
 
         // คำนวนจำนวนวันหยุด
         $date1 = date_create($this->input->post('date_start_up'));
-        $date2 = date_create($date_end);
+        $date2 = date_create($this->input->post('date_end_up'));
         $diff = date_diff($date1, $date2);
-      
+        $date_diff_total = ($diff->format('%a')) + 1;
+
         $data_array = array(
             'ID' => $this->input->post('user_id_up'),
 
@@ -398,8 +412,8 @@ class mdl_calendar extends CI_Model
             'LEAVE_ID ' => $this->input->post('leave_up'),
             'DESCRIPTION' => $this->input->post('description_up'),
             'DATE_START' => $this->input->post('date_start_up'),
-            'DATE_END' => $date_end,
-            'TOTAL' => $diff->format('%a'),
+            'DATE_END' => $this->input->post('date_end_up'),
+            'TOTAL' => $date_diff_total,
             'LEAVE_TYPE_ID ' => $this->input->post('leave_type_name_up'),
             'TIME_S_ID' => $start_up,
             'TIME_E_ID' => $end_up,
