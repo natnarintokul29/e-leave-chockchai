@@ -24,12 +24,12 @@ class Mdl_register extends CI_Model
     {
         $result = '';
         if ($this->input->post('id')) {
-            
 
             $sql = $this->db->select('ID')
                 ->from('employee')
-                ->where('NAME', $this->input->post('name'))
-                ->where('LASTNAME', $this->input->post('lastname'));
+                ->where('ID', $this->input->post('id'));
+            // ->where('LASTNAME', $this->input->post('lastname'));
+            // echo $this->db->get_compiled_select();
             $q = $sql->get();
 
             $num = $q->num_rows();
@@ -38,14 +38,14 @@ class Mdl_register extends CI_Model
                 $r = $q->row();
                 $result = array(
                     'error' => 0,
-                    'text' =>  "รายชื่อถูกต้อง",
+                    'text' =>  "รายชื่อถูกต้อง", //$this->input->post('id'), 
                 );
 
                 $data_update = array(
                     'verify' => 1,
-                    'employee_id' => $r->ID	,
+                    'employee_id' => $r->ID,
                 );
-                $this->db->where('id', $this->input->post('id'));
+                $this->db->where('employee_id', $this->input->post('id'));
                 $this->db->update('staff', $data_update);
 
                 // keep log
@@ -56,7 +56,6 @@ class Mdl_register extends CI_Model
                     'text' =>  "ไม่มีรายชื่อนี้ในระบบ",
                 );
             }
-
 
             return $result;
         }

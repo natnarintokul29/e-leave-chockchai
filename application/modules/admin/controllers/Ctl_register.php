@@ -37,6 +37,7 @@ class Ctl_register extends MY_Controller
                 $sub_data['USERNAME'] = $row->USERNAME;
                 $sub_data['DATE_START'] = $row->DATE_START;
                 $sub_data['VERIFY'] = $row->VERIFY;
+                $sub_data['EMPLOYEE_ID'] = $row->EMPLOYEE_ID;
 
                 $data_result[] = $sub_data;
             }
@@ -54,7 +55,7 @@ class Ctl_register extends MY_Controller
     public function update_verify()
     {
         $verify = $this->mdl_register->update_verify();
-        if ($verify['error']==0) {
+        if ($verify['error'] == 0) {
             $error = 0;
             $message = 'ยืนยันตัวตนแล้ว ';
         } else {

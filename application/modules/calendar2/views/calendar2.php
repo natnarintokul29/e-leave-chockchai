@@ -1,201 +1,127 @@
-<div class="content">
-    <!-- Start Content-->
-    <div class="container-fluid">
-
-        <div class="card-box">
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- Button trigger modal  -->
-                    <button id="btn-leave-modal" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#form_leave">
-                        ฟอร์มใบลา
-                    </button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="d-flex">
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> ลาป่วย</div>
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-warning"></i> ลากิจ</div>
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-danger"></i> ลาพักร้อน</div>
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-info"></i> ลาคลอด</div>
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-pink"></i> ลาทหาร</div>
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-purple"></i> ลาบวช</div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="calendar"></div>
-                </div>
-            </div>
-
-        </div>
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="form_leave" tabindex="-1" aria-modal="true" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="form_leaveLabel">ฟอร์มลางาน</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-
-                        <form class="was-validated leave-validation" name="form_valid_leave" id="form_valid_leave" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" id="method_edit" value="">
-                            <input type="hidden" id="user-id" value="">
-                            <div class="mb-3">
-                                <h3>ชื่อผู้ใช้ :<?php echo $this->session->userdata('user_name') ?></h3>
-                                <h3>ชื่อผู้ใช้ :<?= $calendar->NAME ?></h3>
-                            </div>
-                            <!-- ระบุการลา -->
-                            <div class="mb-4 leave_day_type">
-                                <div class="dropdown">
-
-                                    <select name="leave" id="leave_type_name" class="form-select leave_type_name" required>
-                                        <option value="">ระบุการลา</option>
-                                        <?php
-                                        foreach ($leave_type as $data) {
-
-                                            $selected = '';
-                                            if ($data->ID == 1) {
-                                                $selected = 'selected';
-                                            }
-                                        ?>
-                                            <option value="<?= $data->ID; ?>"><?= $data->LEAVE_TYPE_NAME; ?></option>
-                                        <?php
-                                        }
-                                        ?>
-
-                                    </select>
+                <div class="content">
+                    
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        
+                        <!-- start page title -->
+                        <!-- <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <ol class="breadcrumb m-0">
+                                            <li class="breadcrumb-item"><a href="javascript: void(0);">Adminox</a></li>
+                                            <li class="breadcrumb-item active">Calendar</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Calendar</h4>
                                 </div>
                             </div>
+                        </div>      -->
+                        <!-- end page title --> 
 
-                            <div class="mb-3">
-                                <textarea class="form-control is-invalid rounded-2 border-4" id="description" placeholder="โปรดระบุ เหตุผลการลา" name="description" required></textarea>
-                            </div>
-                            <div class="mb-3 d-flex flex-row">
+                        <div class="row">
+                            <div class="col-lg-12">
 
-                                <input type='text' class="me-3 form-control rounded-2 border-4" id='date_start' placeholder='วันที่เริ่มต้น' name="date_start" autocomplete="off" required>
-                                <input type='text' class="form-control rounded-2 border-4" id='date_end' placeholder='วันที่สิ้นสุด' name="date_end" autocomplete="off" required>
-                            </div>
+                                <div class="card-box">
+                                    <div class="row">
+                                        <div class="col-lg-3">
+                                            <a href="#" data-toggle="modal" data-target="#add-category" class="btn btn-lg btn-primary btn-block waves-effect mt-2 waves-light">
+                                                <i class="fa fa-plus"></i> Create New
+                                            </a>
+                                            <div id="external-events" class="mt-3">
+                                                <br>
+                                                <p class="text-muted">Drag and drop your event or click in the calendar</p>
+                                                <div class="external-event bg-soft-success text-success" data-class="bg-success">
+                                                    <i class="mdi mdi-checkbox-blank-circle mr-1 vertical-middle"></i>New Theme Release
+                                                </div>
+                                                <div class="external-event bg-soft-info text-info" data-class="bg-info">
+                                                    <i class="mdi mdi-checkbox-blank-circle mr-1 vertical-middle"></i>My Event
+                                                </div>
+                                                <div class="external-event bg-soft-warning text-warning" data-class="bg-warning">
+                                                    <i class="mdi mdi-checkbox-blank-circle mr-1 vertical-middle"></i>Meet manager
+                                                </div>
+                                                <div class="external-event bg-soft-purple text-purple" data-class="bg-purple">
+                                                    <i class="mdi mdi-checkbox-blank-circle mr-1 vertical-middle"></i>Create New theme
+                                                </div>
+                                            </div>
 
-                            <!-- <div class="mb-4">
-                            <ul class="nav nav-tabs"  role="tablist">
-                                <li class="nav-item employee-type">
-                                    <a class="nav-link  active" data-bs-toggle="tab" id="office">พนักงานออฟฟิศ</a>
-                                </li>
-                                <li class="nav-item employee-type">
-                                    <a class="nav-link " data-bs-toggle="tab" id="home">แม่บ้าน</a>
-                                </li>
-
-                            </ul>
-                        </div> -->
-                            <!-- ระบุตำแหน่งจะไม่ใช้แล้ว -->
-                            <div class="mb-4">
-                                <div class="dropdown">
-
-                                    <select name="emp_name" id="emp_name" class="form-select employee_name" required>
-                                        <option value="">ระบุตำแหน่ง</option>
-                                        <?php
-                                        foreach ($emp as $data) {
-                                        ?>
-                                            <option class="" value="<?= $data->ID; ?>"><?= $data->EMP_NAME; ?></option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </select>
+                                            <!-- checkbox -->
+                                            <div class="checkbox checkbox-primary mt-4">
+                                                <input type="checkbox" id="drop-remove">
+                                                <label for="drop-remove">
+                                                    Remove after drop
+                                                </label>
+                                            </div>
+                                        </div> <!-- end col-->
+                                        <div class="col-lg-9">
+                                            <div id="calendar"></div>
+                                        </div> <!-- end col -->
+                                    </div>  <!-- end row -->
                                 </div>
-                            </div>
-                            <!-- ระบุตำแหน่งจะไม่ใช้แล้ว -->
-                            
-                            <div class="mb-3 d-flex flex-row">
-                                <input type='text' class="me-3 form-control rounded-2 border-4 employee_name" id='emp_name' name="date_start" autocomplete="off" value="<?= $data->ID; ?>" disabled>
-                            </div>
 
-                            <div class="mb-3">
-                                <select class="form-select leave" id="leave" required aria-label="select leave" name="leave">
-                                    <option value="">ระบุช่วงเวลา ลา</option>
-                                    <?php
-                                    foreach ($leave as $data) {
-                                        $selected = '';
-                                        if ($data->ID == 3) {
-                                            // $selected = 'selected';
-                                        }
-
-                                    ?>
-                                        <option <?php echo $selected; ?> value="<?= $data->ID; ?>"><?= $data->LEAVE_NAME; ?></option>
-                                    <?php
-                                    }
-                                    ?>
-
-
-                                </select>
-                            </div>
-
-
-                            <div class="list_day d-none" data-type="4">
-                                <div class="mb-3 d-flex flex-row">
-                                    <select class="form-select me-3 time_start_hour" aria-label="Default select example" id="time_start_hour" name="time_start_hour" required>
-
-                                        <?php
-
-                                        foreach ($time_s_e as $data) {
-                                            if ($data->START) {
-                                        ?>
-                                                <option value="<?= $data->ID; ?>" data-time="<?= $data->START; ?>"><?= date('H:i', strtotime($data->START)); ?></option>
-
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                    <select class="form-select time_end_hour" aria-label="Default select example" id="time_end_hour" name="time_end_hour" required disabled=disabled>
-
-                                        <?php
-
-                                        foreach ($time_s_e as $data) {
-                                            if ($data->END) {
-                                        ?>
-                                                <option value="<?= $data->ID; ?>" data-time="<?= $data->END; ?>"><?= date('H:i', strtotime($data->END)); ?></option>
-                                        <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
+                                <!-- BEGIN MODAL -->
+                                <div class="modal fade none-border" id="event-modal" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">Add New Event</h4>
+                                            </div>
+                                            <div class="modal-body pb-0"></div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-success save-event waves-effect waves-light">Create event</button>
+                                                <button type="button" class="btn btn-danger delete-event waves-effect waves-light" data-dismiss="modal">Delete</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                <!-- Modal Add Category -->
+                                <div class="modal fade none-border" id="add-category" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title">Add a category</h4>
+                                            </div>
+                                            <div class="modal-body pb-0">
+                                                <form class="form">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Category Name</label>
+                                                        <input class="form-control form-white" placeholder="Enter name" type="text" name="category-name"/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label">Choose Category Color</label>
+                                                        <select class="form-control form-white" data-placeholder="Choose a color..." name="category-color">
+                                                            <option value="success">Success</option>
+                                                            <option value="danger">Danger</option>
+                                                            <option value="info">Info</option>
+                                                            <option value="pink">Pink</option>
+                                                            <option value="primary">Primary</option>
+                                                            <option value="warning">Warning</option>
+                                                            <option value="inverse">Inverse</option>
+                                                        </select>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-danger waves-effect waves-light save-category" data-dismiss="modal">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END MODAL -->
                             </div>
+                            <!-- end col-12 -->
+                        </div> <!-- end row -->
+                        
+                    </div> <!-- end container-fluid -->
 
-                            <div class="mb-3">
-                                <input type="file" id='files' name="files[]" class="filestyle" multiple required>
-
-
-                                <div id="file_img" class="d-flex flex-column justify-content-center border-2"></div>
-
-
-
-                                <div id="file_img_data" class="d-flex flex-column justify-content-center border-2"></div>
-
-
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" id="save-event">บันทึกวันลา</button>
-                                <button type="button" class="btn btn-secondary" id="delete-event" data-bs-dismiss="modal">ลบข้อมูลวันลา</button>
-                            </div>
-                        </form>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div> <!-- end container-fluid -->
-</div> <!-- end content -->
-
+                </div> <!-- end content -->
+                
 <script>
     $(document).ready(function() {
 
@@ -226,9 +152,9 @@
 
             let val = $(this).val();
 
-
+            $(".leave").removeAttr('disabled', 'disabled')
             // console.log(val)
-            let array_leave = [ '5', '6', '7']
+            let array_leave = ['4', '3', '5', '6', '7']
             if (array_leave.indexOf(val) != -1) {
                 setdefault_fulltime();
             }
@@ -257,22 +183,22 @@
         switch (val_type) {
             case '1':
                 $("#description").attr('required', 'required')
-                break;
+            break;
             case '2':
                 $("#description").attr('required', 'required')
-                break;
+            break;
             case '3':
                 $("#description").removeAttr('required', 'required')
-                break;
+            break;
             case '4':
                 $("#description").attr('required', 'required')
-                break;
+            break;
             case '5':
                 $("#description").attr('required', 'required')
-                break;
+            break;
             case '6':
                 $("#description").attr('required', 'required')
-                break;
+            break;
         }
         console.log(val_type)
     });
@@ -437,11 +363,11 @@
                     class_name = 'bg-warning';
                 } else if (value.LEAVE_ID == 3) {
                     class_name = 'bg-danger';
-                } else if (value.LEAVE_ID == 4) {
+                }else if (value.LEAVE_ID == 4) {
                     class_name = 'bg-info';
-                } else if (value.LEAVE_ID == 5) {
+                }else if (value.LEAVE_ID == 5) {
                     class_name = 'bg-pink';
-                } else if (value.LEAVE_ID == 6) {
+                }else if (value.LEAVE_ID == 6) {
                     class_name = 'bg-purple';
                 }
 
@@ -695,7 +621,7 @@
                 time_start_hour = $("#time_start_hour").val(),
                 time_end_hour = $("#time_end_hour").val()
 
-            if (emp_name == '' || leave == '' ||
+            if (emp_name == '' || leave == '' || 
                 date_start == '' || date_end == '' || leave_type_name == '' ||
                 time_start_hour == '' || time_end_hour == '') {
                 alert('กรุณากรอกข้อมูลให้ครบ')

@@ -52,11 +52,8 @@ class mdl_calendar extends CI_Model
 
     public function get_data_emp()
     {
-        $id = $this->session->userdata('user_code');
-        $query = $this->db->select('charactor')
-            ->from('staff')
-            ->where('staff.id='.$id)
-            ->get();
+        $query = $this->db->select('*')
+            ->get('emp_type');
 
         return $query->result();
     }

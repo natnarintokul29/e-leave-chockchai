@@ -61,7 +61,7 @@
                 },
             ],
             "createdRow": function(row, data, index) {
-                let table_btn_verify = `<button type="button" class="btn btn-primary btn_verify" data-id="${data['ID']}" data-name="${data['NAME']}" data-lastname="${data['LASTNAME']}">อนุญาต</button>`
+                let table_btn_verify = `<button type="button" class="btn btn-primary btn_verify" data-id="${data['EMPLOYEE_ID']}" data-name="${data['NAME']}" data-lastname="${data['LASTNAME']}">อนุญาต</button>`
                 $('td', row).eq(5).html(table_btn_verify)
 
             },
@@ -77,7 +77,7 @@
          */
         $(document).on('click', '.btn_verify', function() {
             event.preventDefault();
-            
+
             var data = new FormData();
             data.append('id', $(this).attr('data-id'))
             data.append('name', $(this).attr('data-name'))
@@ -90,10 +90,10 @@
             fetch(url, option)
                 .then(res => res.json())
                 .then((resp) => {
-                    if(resp.error){
-                        swal.fire('ผิดพลาด',resp.message , 'warning')
-                    }else{
-                        swal.fire('สำเร็จ',resp.message , 'success')
+                    if (resp.error) {
+                        swal.fire('ผิดพลาด', resp.message, 'warning')
+                    } else {
+                        swal.fire('สำเร็จ', resp.message, 'success')
                         $(this).parents('tr').remove()
                     }
                 })

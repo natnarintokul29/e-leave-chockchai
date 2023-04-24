@@ -30,7 +30,7 @@
                         </a>
                         <ul class="nav-second-level" aria-expanded="false">
                             <li><a href="<?= site_url('calendar/event_calendars') ?>">ปฏิทินลา</a></li>
-                            <li><a href="layouts-menucollapsed.html">ปฏิทินลาชดเชย</a></li>
+                            <li><a href="<?= site_url('calendar2/event_calendars') ?>">ปฏิทินลาชดเชย</a></li>
                         </ul>
                     </li>
 

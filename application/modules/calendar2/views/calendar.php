@@ -17,10 +17,6 @@
                         <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-primary"></i> ลาป่วย</div>
                         <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-warning"></i> ลากิจ</div>
                         <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-danger"></i> ลาพักร้อน</div>
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-info"></i> ลาคลอด</div>
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-pink"></i> ลาทหาร</div>
-                        <div class="px-2"><i class="mdi mdi-checkbox-blank-circle text-purple"></i> ลาบวช</div>
-
                     </div>
                 </div>
             </div>
@@ -111,10 +107,6 @@
                                 </div>
                             </div>
                             <!-- ระบุตำแหน่งจะไม่ใช้แล้ว -->
-                            
-                            <div class="mb-3 d-flex flex-row">
-                                <input type='text' class="me-3 form-control rounded-2 border-4 employee_name" id='emp_name' name="date_start" autocomplete="off" value="<?= $data->ID; ?>" disabled>
-                            </div>
 
                             <div class="mb-3">
                                 <select class="form-select leave" id="leave" required aria-label="select leave" name="leave">
@@ -226,9 +218,9 @@
 
             let val = $(this).val();
 
-
+            $(".leave").removeAttr('disabled', 'disabled')
             // console.log(val)
-            let array_leave = [ '5', '6', '7']
+            let array_leave = ['4', '3', '5', '6', '7']
             if (array_leave.indexOf(val) != -1) {
                 setdefault_fulltime();
             }
@@ -257,22 +249,22 @@
         switch (val_type) {
             case '1':
                 $("#description").attr('required', 'required')
-                break;
+            break;
             case '2':
                 $("#description").attr('required', 'required')
-                break;
+            break;
             case '3':
                 $("#description").removeAttr('required', 'required')
-                break;
+            break;
             case '4':
                 $("#description").attr('required', 'required')
-                break;
+            break;
             case '5':
                 $("#description").attr('required', 'required')
-                break;
+            break;
             case '6':
                 $("#description").attr('required', 'required')
-                break;
+            break;
         }
         console.log(val_type)
     });
@@ -418,11 +410,11 @@
 
         return response.json()
     }
-    // test();
+    test();
 
-    // function test() {
-    //     console.log("test");
-    // }
+    function test() {
+        console.log("test");
+    }
 
     get_data()
         .then((data) => {
@@ -435,14 +427,8 @@
                     class_name = 'bg-primary';
                 } else if (value.LEAVE_ID == 2) {
                     class_name = 'bg-warning';
-                } else if (value.LEAVE_ID == 3) {
+                } else {
                     class_name = 'bg-danger';
-                } else if (value.LEAVE_ID == 4) {
-                    class_name = 'bg-info';
-                } else if (value.LEAVE_ID == 5) {
-                    class_name = 'bg-pink';
-                } else if (value.LEAVE_ID == 6) {
-                    class_name = 'bg-purple';
                 }
 
                 set_event.push({
@@ -695,7 +681,7 @@
                 time_start_hour = $("#time_start_hour").val(),
                 time_end_hour = $("#time_end_hour").val()
 
-            if (emp_name == '' || leave == '' ||
+            if (emp_name == '' || leave == '' || 
                 date_start == '' || date_end == '' || leave_type_name == '' ||
                 time_start_hour == '' || time_end_hour == '') {
                 alert('กรุณากรอกข้อมูลให้ครบ')
